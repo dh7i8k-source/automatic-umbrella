@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earlybird Schools | Exam Results</title>
+<style>
+:root{--navy:#142b4a;--blue:#2459a6;--pale:#eef4fb;--ink:#1e293b;--muted:#64748b;--line:#e2e8f0;--green:#16845b}
+*{box-sizing:border-box}
+body{margin:0;background:#f4f7fb;color:var(--ink);font:15px/1.5 Inter,Segoe UI,Arial,sans-serif}
+header{background:var(--navy);color:#fff;padding:26px max(22px,calc((100% - 1120px)/2))}
+.brand{font-size:12px;letter-spacing:2px;text-transform:uppercase;color:#c7d7ed;font-weight:700}
+header h1{margin:5px 0 3px;font-size:27px}
+header p{margin:0;color:#d4deeb}
+main{max-width:1120px;margin:28px auto;padding:0 20px 50px}
+.student{background:#fff;border:1px solid var(--line);border-radius:15px;padding:20px 22px;display:flex;justify-content:space-between;gap:20px;align-items:center;box-shadow:0 5px 20px #152c4a0a}
+.student h2{margin:0 0 5px;font-size:21px}
+.meta{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--muted);font-size:13px}
+.meta strong{color:var(--ink)}
+.pill{background:var(--pale);color:var(--blue);padding:7px 12px;border-radius:99px;font-size:12px;font-weight:700;white-space:nowrap}
+.tabs{display:flex;gap:9px;flex-wrap:wrap;margin:22px 0 16px}
+.tab{border:1px solid var(--line);background:#fff;color:#475569;padding:11px 17px;border-radius:9px;font-weight:700;cursor:pointer;font-size:14px}
+.tab.active{background:var(--blue);border-color:var(--blue);color:white}
+.summary{display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin-bottom:17px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:13px;padding:17px 18px}
+.stat span{display:block;color:var(--muted);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+.stat strong{display:block;font-size:25px;margin-top:4px;color:var(--navy)}
+.stat small{color:var(--muted)}
+.panel{background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.panel-head{padding:18px 20px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:12px;align-items:center}
+.panel-head h3{margin:0;font-size:17px}
+.panel-head a{color:var(--blue);font-size:13px;text-decoration:none;font-weight:700}
+.table-wrap{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:650px}
+th,td{text-align:left;padding:13px 17px;border-bottom:1px solid #edf1f6}
+th{font-size:11px;text-transform:uppercase;letter-spacing:.6px;color:var(--muted);background:#f8fafc}
+td{font-size:14px}
+tbody tr:last-child td{border-bottom:0}
+.grade{display:inline-block;background:#edf4ff;color:#2459a6;border-radius:6px;padding:3px 8px;font-size:12px;font-weight:800}
+.remark{margin-top:17px;display:grid;grid-template-columns:1fr 1fr;gap:13px}
+.note{background:#fff;border:1px solid var(--line);border-radius:12px;padding:16px}
+.note h4{margin:0 0 7px;font-size:13px;color:var(--navy)}
+.note p{margin:0;color:#536277;font-size:13px}
+footer{text-align:center;color:#8793a4;font-size:12px;padding:22px}
+@media(max-width:650px){header h1{font-size:22px}.student{align-items:flex-start;flex-direction:column}.summary{grid-template-columns:1fr 1fr}.stat:last-child{grid-column:span 2}.remark{grid-template-columns:1fr}.tab{flex:1;min-width:130px}}
+@media print{body{background:#fff}.tabs,.no-print,footer{display:none!important}main{margin:0;max-width:none;padding:12px}.student,.stat,.panel,.note{box-shadow:none;break-inside:avoid}header{background:#fff;color:#142b4a;padding:10px 12px}header p,.brand{color:#475569}.panel{overflow:visible}.table-wrap{overflow:visible}table{min-width:0}th,td{padding:8px;font-size:11px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">Earlybird Schools</div>
+  <h1>Academic Results Dashboard</h1>
+  <p>Junior Secondary · Examination performance overview</p>
+</header>
+<main>
+  <section class="student">
+    <div>
+      <h2 id="studentName">Sandra Mwanzia</h2>
+      <div class="meta">
+        <span>Admission No: <strong>JSS10196</strong></span>
+        <span>Class: <strong>Grade 8 Purple</strong></span>
+        <span>Current Class: <strong>Grade 8 Purple</strong></span>
+      </div>
+    </div>
+    <span class="pill">2026 · Term 3</span>
+  </section>
+
+  <nav class="tabs" aria-label="Examination categories">
+    <button class="tab active" data-exam="endTerm">End Term</button>
+    <button class="tab" data-exam="sba">SBA Exams</button>
+    <button class="tab" data-exam="opener">Opener Exams</button>
+  </nav>
+
+  <section class="summary">
+    <div class="stat"><span>Mean score</span><strong id="mean">78%</strong><small id="meanGrade">ME1</small></div>
+    <div class="stat"><span>Total marks</span><strong id="total">706/900</strong><small>Combined subject marks</small></div>
+    <div class="stat"><span>Examination</span><strong id="examShort" style="font-size:19px">End Term</strong><small id="examPeriod">2026 · Term 3</small></div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h3 id="tableTitle">End Term Assessment — Subject Results</h3>
+      <a id="sourceLink" href="https://earlybird-jss.smartshule.com/fetch_exam_result/228/29/14" target="_blank" rel="noopener">Open original report ↗</a>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Subject</th><th>Marks</th><th>Percentage</th><th>Grade</th><th>Teacher</th></tr></thead>
+        <tbody id="resultsBody"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="remark">
+    <div class="note"><h4>Class Teacher's Remark</h4><p id="classRemark"></p></div>
+    <div class="note"><h4>Headteacher's Remark</h4><p id="headRemark"></p></div>
+  </section>
+  <div class="no-print" style="display:flex;justify-content:flex-end;margin-top:18px">
+    <button class="tab" onclick="window.print()">Print this report</button>
+  </div>
+</main>
+<footer>Earlybird Schools · Academic Results Dashboard</footer>
+
+<script>
+const exams = {
+  endTerm: {
+    title:"End Term Assessment", short:"End Term", mean:"78%", meanGrade:"ME1", total:"706/900",
+    url:"https://earlybird-jss.smartshule.com/fetch_exam_result/228/29/14",
+    subjects:[
+      ["English","74 / 100","74","ME1","Brian Simiyu"],
+      ["Kiswahili","63 / 100","63","ME2","Alice Oenga"],
+      ["Mathematics","66 / 100","66","ME2","Evance Luka"],
+      ["Integrated Science","85 / 100","85","EE2","Benson Otieno"],
+      ["Social Studies","76 / 100","76","ME1","—"],
+      ["Christian Religious Education","88 / 100","88","EE2","—"],
+      ["Creative Arts & Sports","84 / 100","84","EE2","Cynthia Nthuku"],
+      ["Agriculture","89 / 100","89","EE2","—"],
+      ["Pre-Technical Studies","81 / 100","81","EE2","—"],
+      ["German","90 / 100","90","EE1","—"]
+    ]
+  },
+  sba: {
+    title:"SBA Grade 7 & 8", short:"SBA Exams", mean:"74%", meanGrade:"ME1", total:"668/900",
+    url:"https://earlybird-jss.smartshule.com/fetch_exam_result/228/26/14",
+    subjects:[
+      ["English","78 / 100","78","ME1","Brian Simiyu"],
+      ["Kiswahili","61 / 100","61","ME2","Alice Oenga"],
+      ["Mathematics","56 / 100","56","AE1","Evance Luka"],
+      ["Integrated Science","73 / 100","73","ME1","Benson Otieno"],
+      ["Social Studies","78 / 100","78","ME1","—"],
+      ["Christian Religious Education","41 / 50","82","EE2","—"],
+      ["Creative Arts & Sports","77 / 100","77","ME1","Cynthia Nthuku"],
+      ["Agriculture","80 / 100","80","EE2","—"],
+      ["Pre-Technical Studies","83 / 100","83","EE2","—"]
+    ]
+  },
+  opener: {
+    title:"Opener Term 3 2026", short:"Opener Exams", mean:"74%", meanGrade:"ME1", total:"662/900",
+    url:"https://earlybird-jss.smartshule.com/fetch_exam_result/228/23/14",
+    subjects:[
+      ["English","74 / 100","74","ME1","Brian Simiyu"],
+      ["Kiswahili","67 / 100","67","ME2","Alice Oenga"],
+      ["Mathematics","33 / 100","33","BE1","Evance Luka"],
+      ["Integrated Science","87 / 100","87","EE2","Benson Otieno"],
+      ["Social Studies","75 / 100","75","ME1","—"],
+      ["Christian Religious Education","90 / 100","90","EE1","—"],
+      ["Creative Arts & Sports","78 / 100","78","ME1","Cynthia Nthuku"],
+      ["Agriculture","73 / 100","73","ME1","—"],
+      ["Pre-Technical Studies","85 / 100","85","EE2","—"],
+      ["German","93 / 100","93","EE1","—"]
+    ]
+  }
+};
+const classRemark = "You have consistently produced work that meets grade level expectations continue to grow and take initiative next term.";
+const headRemark = "You are meeting expected standards though there is room for improvement and have positive momentum.";
+
+function showExam(key){
+  const exam=exams[key];
+  document.querySelectorAll(".tab[data-exam]").forEach(b=>b.classList.toggle("active",b.dataset.exam===key));
+  document.getElementById("mean").textContent=exam.mean;
+  document.getElementById("meanGrade").textContent=exam.meanGrade;
+  document.getElementById("total").textContent=exam.total;
+  document.getElementById("examShort").textContent=exam.short;
+  document.getElementById("examPeriod").textContent="2026 · Term 3";
+  document.getElementById("tableTitle").textContent=exam.title+" — Subject Results";
+  document.getElementById("sourceLink").href=exam.url;
+  document.getElementById("resultsBody").innerHTML=exam.subjects.map(s=>
+    `<tr><td><strong>${s[0]}</strong></td><td>${s[1]}</td><td>${s[2]}%</td><td><span class="grade">${s[3]}</span></td><td>${s[4]}</td></tr>`
+  ).join("");
+  document.getElementById("classRemark").textContent=classRemark;
+  document.getElementById("headRemark").textContent=headRemark;
+}
+document.querySelectorAll(".tab[data-exam]").forEach(button=>{
+  button.addEventListener("click",()=>showExam(button.dataset.exam));
+});
+showExam("endTerm");
+</script>
+</body>
+</html>
